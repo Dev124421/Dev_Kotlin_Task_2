@@ -48,8 +48,7 @@ class calculator : AppCompatActivity() {
             val category = when {
                 bmi < 18.5 -> "Underweight"
                 bmi < 25 -> "Normal weight"
-                bmi < 30 -> "Overweight"
-                else -> "Obese"
+                else -> "Overweight"
             }
 
             // Display result in TextView
