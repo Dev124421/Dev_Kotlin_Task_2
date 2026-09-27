@@ -24,3 +24,37 @@ class converter : AppCompatActivity() {
         }
     }
 }
+
+    private fun convertCurrency(
+        amount: Double,
+        from: String,
+        to: String
+    ): Double {
+
+        // Exchange rates relative to USD
+        val rates = mapOf(
+            "USD" to 1.0,
+            "INR" to 88.0,
+            "EUR" to 0.85,
+            "GBP" to 0.74,
+            "JPY" to 147.0
+        )
+
+        // Convert source currency → USD
+        val amountInUSD = amount / rates[from]!!
+
+        // Convert USD → target currency
+        return amountInUSD * rates[to]!!
+    }
+
+    private fun displayHistory() {
+
+        // Clear the TextView first
+        historyText.text = ""
+
+        // Display latest history
+        for (item in historyList.reversed()) {
+            historyText.append("$item\n")
+        }
+    }
+}
