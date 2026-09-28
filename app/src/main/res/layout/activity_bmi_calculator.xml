@@ -44,7 +44,8 @@
             android:layout_height="67dp"
             android:hint="Enter height in cm"
             android:singleLine="true"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 
@@ -73,7 +74,8 @@
             android:layout_height="67dp"
             android:hint="Enter weight in kg"
             android:singleLine="true"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 
