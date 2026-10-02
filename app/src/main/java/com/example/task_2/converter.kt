@@ -13,10 +13,8 @@ class converter : AppCompatActivity() {
     private lateinit var convertBtn: Button
     private lateinit var historyText: TextView
 
-    // List to store conversion history
     private val historyList = ArrayList<String>()
 
-    // Currency names
     private val currencies = arrayOf(
         "USD",
         "INR",
@@ -37,7 +35,6 @@ class converter : AppCompatActivity() {
         convertBtn = findViewById(R.id.Convertbtn)
         historyText = findViewById(R.id.History)
 
-        // Create Spinner adapter
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item,
@@ -47,7 +44,6 @@ class converter : AppCompatActivity() {
         spinner1.adapter = adapter
         spinner2.adapter = adapter
 
-        // Convert button
         convertBtn.setOnClickListener {
 
             val input = amount.text.toString()
@@ -67,25 +63,21 @@ class converter : AppCompatActivity() {
             val fromCurrency = spinner1.selectedItem.toString()
             val toCurrency = spinner2.selectedItem.toString()
 
-            // Convert currency
             val convertedValue = convertCurrency(
                 value,
                 fromCurrency,
                 toCurrency
             )
 
-            // Display result
             resultamount.setText(
                 String.format("%.2f", convertedValue)
             )
 
-            // Add conversion to history
             val history = "$value $fromCurrency → %.2f $toCurrency"
                 .format(convertedValue)
 
             historyList.add(history)
 
-            // Display history
             displayHistory()
         }
     }
@@ -96,7 +88,6 @@ class converter : AppCompatActivity() {
         to: String
     ): Double {
 
-        // Exchange rates relative to USD
         val rates = mapOf(
             "USD" to 1.0,
             "INR" to 88.0,
@@ -105,19 +96,14 @@ class converter : AppCompatActivity() {
             "JPY" to 147.0
         )
 
-        // Convert source currency → USD
         val amountInUSD = amount / rates[from]!!
-
-        // Convert USD → target currency
         return amountInUSD * rates[to]!!
     }
 
     private fun displayHistory() {
 
-        // Clear the TextView first
         historyText.text = ""
 
-        // Display latest history
         for (item in historyList.reversed()) {
             historyText.append("$item\n")
         }

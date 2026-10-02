@@ -4,4 +4,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_grey">#999999</color>
     <color name="blue">#82EEFD</color>
+    <color name="Blue">#0041C2</color>
+    <color name="crownflower_blue">#6495ED</color>
+    <color name="light_blue">#CAF0F8</color>
+    <color name="light_green">#33B864</color>
+    <color name="yellow">#FFBF00</color>
 </resources>
