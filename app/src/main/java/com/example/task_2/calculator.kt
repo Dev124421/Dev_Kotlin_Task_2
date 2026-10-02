@@ -16,21 +16,17 @@ class calculator : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_bmi_calculator)
 
-        // Input fields
         val weightInput = findViewById<EditText>(R.id.weight)
         val heightInput = findViewById<EditText>(R.id.height)
 
-        // Button
         val calculateBtn = findViewById<Button>(R.id.btnCalculate)
 
-        // Output TextViews
         val bmiValue = findViewById<TextView>(R.id.BMIvalue)
         val categoryType = findViewById<TextView>(R.id.Categorytype)
         val description = findViewById<TextView>(R.id.Description)
 
         calculateBtn.setOnClickListener {
 
-            // Check empty inputs
             if (weightInput.text.isEmpty() || heightInput.text.isEmpty()) {
 
                 Toast.makeText(
@@ -42,17 +38,13 @@ class calculator : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Get input values
             val weight = weightInput.text.toString().toDouble()
             val heightCm = heightInput.text.toString().toDouble()
 
-            // Convert height from cm to meters
             val heightM = heightCm / 100
 
-            // Calculate BMI
             val bmi = weight / (heightM * heightM)
 
-            // Determine category and description
             val category: String
             val desc: String
 
@@ -78,12 +70,10 @@ class calculator : AppCompatActivity() {
                 }
             }
 
-            // Display result
             bmiValue.text = "%.2f".format(bmi)
             categoryType.text = category
             description.text = desc
 
-            // Toast message
             Toast.makeText(
                 this,
                 "BMI: %.2f\nCategory: $category".format(bmi),
