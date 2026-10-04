@@ -63,12 +63,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/Historyelement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"/>
+        <ListView
+            android:layout_width="360dp"
+            android:layout_height="500dp"
+            android:id="@+id/Bmi_history"/>
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

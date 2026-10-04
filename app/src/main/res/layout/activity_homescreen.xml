@@ -24,16 +24,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageButton
-            android:id="@+id/menuButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Menu"
-            android:padding="12dp"
-            android:src="@drawable/ic_menu"
-            app:tint="@color/white" />
-
         <TextView
             android:id="@+id/tvHeaderTitle"
             android:layout_width="wrap_content"
