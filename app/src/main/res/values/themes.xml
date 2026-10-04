@@ -2,8 +2,12 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Task_2" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/Blue</item>
+        <item name="colorPrimaryVariant">@color/Blue</item>
+        <item name="android:statusBarColor">@color/Blue</item>
     </style>
 
     <style name="Theme.Task_2" parent="Base.Theme.Task_2" />
+
+    <style name="Theme.MyApp" parent="Theme.Material3.DayNight.NoActionBar" />
 </resources>

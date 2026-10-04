@@ -19,11 +19,11 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val explicitintent = findViewById<Button>(R.id.Startbtn)
-        explicitintent.setOnClickListener {
+        val intent1 = findViewById<Button>(R.id.Startbtn)
+        intent1.setOnClickListener {
             val intent = Intent(this, Homescreen::class.java)
             startActivity(intent)
+            finish()
         }
-
     }
 }

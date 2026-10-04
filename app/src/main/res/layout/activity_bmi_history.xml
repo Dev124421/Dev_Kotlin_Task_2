@@ -8,25 +8,38 @@
     tools:context=".BMI_History"
     android:background="@color/white">
 
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
+        android:id="@+id/headerLayout"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
         android:background="@color/Blue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:padding="12dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="67dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
             android:text="BMI History"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="27sp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="25sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
