@@ -13,7 +13,7 @@
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="80dp"
         android:background="@color/Blue"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -156,7 +156,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/blue_button"
+        android:drawableTint="@color/Blue"
         android:text="Convert"
         android:textColor="@color/white"
         android:textSize="14sp"

@@ -22,8 +22,10 @@ class converter : AppCompatActivity() {
     private lateinit var toCurrencyList: ListView
     private lateinit var convertBtn: Button
     private lateinit var backButton: ImageButton
-    private val fromList = ArrayList<String>()
-    private val toList = ArrayList<String>()
+
+    private var fromList = ArrayList<String>()
+    private var toList = ArrayList<String>()
+
     private val currencies = arrayOf(
         "USD - US Dollar",
         "INR - Indian Rupee",
@@ -31,12 +33,21 @@ class converter : AppCompatActivity() {
         "GBP - British Pound",
         "JPY - Japanese Yen"
     )
+
     private lateinit var fromAdapter: ArrayAdapter<String>
     private lateinit var toAdapter: ArrayAdapter<String>
+
+    companion object {
+        private const val KEY_FROM_LIST = "key_from_list"
+        private const val KEY_TO_LIST = "key_to_list"
+        private const val KEY_RESULT_AMOUNT = "key_result_amount"
+        private const val KEY_RESULT_DETAILS = "key_result_details"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_converter)
+
         spinner1 = findViewById(R.id.spinner1)
         spinner2 = findViewById(R.id.spinner2)
         amount = findViewById(R.id.amount)
@@ -47,73 +58,64 @@ class converter : AppCompatActivity() {
         convertBtn = findViewById(R.id.Convertbtn)
         backButton = findViewById(R.id.backButton)
 
-
+        amount.setText("")
         val spinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item,
             currencies
         )
-
         spinner1.adapter = spinnerAdapter
         spinner2.adapter = spinnerAdapter
 
-        spinner1.setSelection(0)
-        spinner2.setSelection(2)
+        if (savedInstanceState != null) {
+            savedInstanceState.getStringArrayList(KEY_FROM_LIST)?.let {
+                fromList.addAll(it)
+            }
+            savedInstanceState.getStringArrayList(KEY_TO_LIST)?.let {
+                toList.addAll(it)
+            }
+            resultamount.text = savedInstanceState.getString(KEY_RESULT_AMOUNT, "")
+            resultDetails.text = savedInstanceState.getString(KEY_RESULT_DETAILS, "")
+        } else {
+            spinner1.setSelection(0)
+            spinner2.setSelection(2)
+        }
 
         fromAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
             fromList
         )
-
         toAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1,
             toList
         )
-
         fromCurrencyList.adapter = fromAdapter
         toCurrencyList.adapter = toAdapter
-
         backButton.setOnClickListener {
             finish()
         }
-        convertBtn.setOnClickListener {
 
+        convertBtn.setOnClickListener {
             val input = amount.text.toString().trim()
             if (input.isEmpty()) {
-                Toast.makeText(
-                    this,
-                    "Please enter an amount",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(this, "Please enter an amount", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             val value = input.toDoubleOrNull()
             if (value == null) {
-                Toast.makeText(
-                    this,
-                    "Please enter a valid amount",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(this, "Please enter a valid amount", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             val fromCurrency = spinner1.selectedItem.toString().substring(0, 3)
             val toCurrency = spinner2.selectedItem.toString().substring(0, 3)
-
-            val convertedValue = convertCurrency(
-                value,
-                fromCurrency,
-                toCurrency
-            )
+            val convertedValue = convertCurrency(value, fromCurrency, toCurrency)
             val formattedValue = String.format("%.2f", convertedValue)
 
             resultamount.text = "$toCurrency $formattedValue"
             resultDetails.text = "($value $fromCurrency = $formattedValue $toCurrency)"
+
             fromList.add("$value $fromCurrency")
             toList.add("$formattedValue $toCurrency")
             fromAdapter.notifyDataSetChanged()
@@ -121,12 +123,18 @@ class converter : AppCompatActivity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putStringArrayList(KEY_FROM_LIST, fromList)
+        outState.putStringArrayList(KEY_TO_LIST, toList)
+        outState.putString(KEY_RESULT_AMOUNT, resultamount.text.toString())
+        outState.putString(KEY_RESULT_DETAILS, resultDetails.text.toString())
+    }
     private fun convertCurrency(
         amount: Double,
         from: String,
         to: String
     ): Double {
-
         val rates = mapOf(
             "USD" to 1.0,
             "INR" to 88.0,
@@ -135,7 +143,7 @@ class converter : AppCompatActivity() {
             "JPY" to 147.0
         )
 
-        val amountInUSD = amount / rates[from]!!
-        return amountInUSD * rates[to]!!
+        val amountInUSD = amount / (rates[from] ?: 1.0)
+        return amountInUSD * (rates[to] ?: 1.0)
     }
 }

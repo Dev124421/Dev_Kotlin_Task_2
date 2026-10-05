@@ -10,10 +10,9 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
 class calculator : AppCompatActivity() {
-    private val historyList = ArrayList<String>()
 
+    private val historyList = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bmi_calculator)
@@ -24,10 +23,10 @@ class calculator : AppCompatActivity() {
         val calculateBtn = findViewById<Button>(R.id.btnCalculate)
         val historyButton = findViewById<Button>(R.id.Historybtn)
         val bmiValue = findViewById<TextView>(R.id.BMIvalue)
-        val categoryType = findViewById<TextView>(R.id.Categorytype)
-        val description = findViewById<TextView>(R.id.Description)
-
+        val categoryType =findViewById<TextView>(R.id.Categorytype)
+        val description =findViewById<TextView>(R.id.Description)
         val backButton = findViewById<ImageButton>(R.id.backButton)
+
         backButton.setOnClickListener {
             finish()
         }
@@ -45,7 +44,6 @@ class calculator : AppCompatActivity() {
         )
 
         heightUnitSpinner.adapter = heightAdapter
-
         val weightUnits = arrayOf(
             "kg",
             "g"
@@ -56,6 +54,7 @@ class calculator : AppCompatActivity() {
             android.R.layout.simple_spinner_dropdown_item,
             weightUnits
         )
+
         weightUnitSpinner.adapter = weightAdapter
 
         heightUnitSpinner.setSelection(0)
@@ -134,7 +133,6 @@ class calculator : AppCompatActivity() {
                     desc = "Your BMI is in the obese range."
                 }
             }
-
             val formattedBMI = String.format("%.1f", bmi)
 
             bmiValue.text = formattedBMI
@@ -143,8 +141,12 @@ class calculator : AppCompatActivity() {
 
             val history = "BMI: $formattedBMI | $category"
             historyList.add(history)
-        }
 
+            heightInput.text.clear()
+            weightInput.text.clear()
+            heightUnitSpinner.setSelection(0)
+            weightUnitSpinner.setSelection(0)
+        }
         historyButton.setOnClickListener {
             val intent = Intent(this, BMI_History::class.java)
             intent.putStringArrayListExtra(

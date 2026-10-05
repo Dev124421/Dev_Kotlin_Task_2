@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="80dp"
         android:background="@color/Blue"
         android:gravity="center_vertical"
         android:orientation="horizontal"
