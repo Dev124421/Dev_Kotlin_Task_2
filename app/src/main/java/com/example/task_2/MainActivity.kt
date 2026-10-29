@@ -13,14 +13,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        val intent1 = findViewById<Button>(R.id.Startbtn)
-        intent1.setOnClickListener {
+        val startBtn = findViewById<Button>(R.id.btnStart)
+        startBtn.setOnClickListener {
             val intent = Intent(this, Homescreen::class.java)
             startActivity(intent)
             finish()

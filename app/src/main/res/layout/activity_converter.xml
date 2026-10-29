@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,30 +12,34 @@
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
+        android:minHeight="64dp"
         android:background="@color/Blue"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="8dp"
         android:paddingEnd="16dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Back"
             android:padding="12dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_arrow_back"
             app:tint="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="4dp"
             android:text="Currency Converter"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -53,7 +56,7 @@
         android:textSize="13sp"
         android:textStyle="bold"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -89,7 +92,7 @@
         android:textSize="13sp"
         android:textStyle="bold"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="14dp"
         app:layout_constraintTop_toBottomOf="@id/fromCard"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -125,7 +128,7 @@
         android:textSize="13sp"
         android:textStyle="bold"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="14dp"
         app:layout_constraintTop_toBottomOf="@id/toCard"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -151,25 +154,24 @@
 
     <Button
         android:id="@+id/Convertbtn"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="20dp"
-        android:drawableTint="@color/Blue"
+        android:backgroundTint="@color/Blue"
         android:text="Convert"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/amount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/Blue"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/resultCard"
         android:layout_width="0dp"
-        android:layout_height="105dp"
+        android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="20dp"
@@ -197,10 +199,10 @@
                 android:id="@+id/resultamount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="2dp"
                 android:text="€ 0.00"
                 android:textColor="@color/Blue"
-                android:textSize="25sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -219,66 +221,42 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/historycard"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         app:cardBackgroundColor="@color/light_blue"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:layout_constraintTop_toBottomOf="@id/resultCard"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/Blue"
-                android:text="From : "
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
-
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp">
-
-                <ListView
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/FromCurrency" />
-
-            </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:text="Conversion History"
                 android:textColor="@color/Blue"
-                android:text="To : "
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"/>
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp">
-
-                <ListView
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ToCurrency"/>
-
-            </LinearLayout>
+            <ListView
+                android:id="@+id/historyList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#D5E3F0"
+                android:dividerHeight="1dp" />
 
         </LinearLayout>
 

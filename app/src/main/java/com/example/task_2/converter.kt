@@ -1,6 +1,7 @@
 package com.example.task_2
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -9,7 +10,10 @@ import android.widget.ListView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class converter : AppCompatActivity() {
 
@@ -18,13 +22,13 @@ class converter : AppCompatActivity() {
     private lateinit var amount: EditText
     private lateinit var resultamount: TextView
     private lateinit var resultDetails: TextView
-    private lateinit var fromCurrencyList: ListView
-    private lateinit var toCurrencyList: ListView
+    private lateinit var historyList: ListView
     private lateinit var convertBtn: Button
     private lateinit var backButton: ImageButton
 
-    private var fromList = ArrayList<String>()
-    private var toList = ArrayList<String>()
+    // Single unified list for history items
+    private var historyData = ArrayList<String>()
+    private lateinit var historyAdapter: ArrayAdapter<String>
 
     private val currencies = arrayOf(
         "USD - US Dollar",
@@ -34,31 +38,41 @@ class converter : AppCompatActivity() {
         "JPY - Japanese Yen"
     )
 
-    private lateinit var fromAdapter: ArrayAdapter<String>
-    private lateinit var toAdapter: ArrayAdapter<String>
-
     companion object {
-        private const val KEY_FROM_LIST = "key_from_list"
-        private const val KEY_TO_LIST = "key_to_list"
+        private const val KEY_HISTORY_LIST = "key_history_list"
         private const val KEY_RESULT_AMOUNT = "key_result_amount"
         private const val KEY_RESULT_DETAILS = "key_result_details"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_converter)
+
+        val headerLayout = findViewById<View>(R.id.headerLayout)
+        val mainLayout = findViewById<View>(R.id.main)
+
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout) { _, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            headerLayout.setPadding(
+                headerLayout.paddingLeft,
+                systemBars.top + 10,
+                headerLayout.paddingRight,
+                10
+            )
+            mainLayout.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         spinner1 = findViewById(R.id.spinner1)
         spinner2 = findViewById(R.id.spinner2)
         amount = findViewById(R.id.amount)
         resultamount = findViewById(R.id.resultamount)
         resultDetails = findViewById(R.id.resultDetails)
-        fromCurrencyList = findViewById(R.id.FromCurrency)
-        toCurrencyList = findViewById(R.id.ToCurrency)
+        historyList = findViewById(R.id.historyList)
         convertBtn = findViewById(R.id.Convertbtn)
         backButton = findViewById(R.id.backButton)
 
-        amount.setText("")
         val spinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_dropdown_item,
@@ -68,31 +82,24 @@ class converter : AppCompatActivity() {
         spinner2.adapter = spinnerAdapter
 
         if (savedInstanceState != null) {
-            savedInstanceState.getStringArrayList(KEY_FROM_LIST)?.let {
-                fromList.addAll(it)
+            savedInstanceState.getStringArrayList(KEY_HISTORY_LIST)?.let {
+                historyData.addAll(it)
             }
-            savedInstanceState.getStringArrayList(KEY_TO_LIST)?.let {
-                toList.addAll(it)
-            }
-            resultamount.text = savedInstanceState.getString(KEY_RESULT_AMOUNT, "")
-            resultDetails.text = savedInstanceState.getString(KEY_RESULT_DETAILS, "")
+            resultamount.text = savedInstanceState.getString(KEY_RESULT_AMOUNT, "€ 0.00")
+            resultDetails.text = savedInstanceState.getString(KEY_RESULT_DETAILS, "Enter an amount to convert")
         } else {
             spinner1.setSelection(0)
             spinner2.setSelection(2)
         }
 
-        fromAdapter = ArrayAdapter(
+        historyAdapter = ArrayAdapter(
             this,
-            android.R.layout.simple_list_item_1,
-            fromList
+            R.layout.item_history,
+            R.id.historyText,
+            historyData
         )
-        toAdapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            toList
-        )
-        fromCurrencyList.adapter = fromAdapter
-        toCurrencyList.adapter = toAdapter
+        historyList.adapter = historyAdapter
+
         backButton.setOnClickListener {
             finish()
         }
@@ -108,6 +115,7 @@ class converter : AppCompatActivity() {
                 Toast.makeText(this, "Please enter a valid amount", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
             val fromCurrency = spinner1.selectedItem.toString().substring(0, 3)
             val toCurrency = spinner2.selectedItem.toString().substring(0, 3)
             val convertedValue = convertCurrency(value, fromCurrency, toCurrency)
@@ -116,20 +124,21 @@ class converter : AppCompatActivity() {
             resultamount.text = "$toCurrency $formattedValue"
             resultDetails.text = "($value $fromCurrency = $formattedValue $toCurrency)"
 
-            fromList.add("$value $fromCurrency")
-            toList.add("$formattedValue $toCurrency")
-            fromAdapter.notifyDataSetChanged()
-            toAdapter.notifyDataSetChanged()
+            historyData.add(0, "$value $fromCurrency  ➔  $formattedValue $toCurrency")
+            historyAdapter.notifyDataSetChanged()
+
+            amount.text.clear()
+            amount.clearFocus()
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putStringArrayList(KEY_FROM_LIST, fromList)
-        outState.putStringArrayList(KEY_TO_LIST, toList)
+        outState.putStringArrayList(KEY_HISTORY_LIST, historyData)
         outState.putString(KEY_RESULT_AMOUNT, resultamount.text.toString())
         outState.putString(KEY_RESULT_DETAILS, resultDetails.text.toString())
     }
+
     private fun convertCurrency(
         amount: Double,
         from: String,

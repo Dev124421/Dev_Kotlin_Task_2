@@ -12,30 +12,35 @@
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
+        android:minHeight="64dp"
         android:background="@color/Blue"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="8dp"
         android:paddingEnd="16dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Back"
             android:padding="12dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_arrow_back"
             app:tint="@color/white" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
             android:text="BMI Calculator"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -43,50 +48,56 @@
 
         <Button
             android:id="@+id/Historybtn"
-            android:layout_width="100dp"
-            android:layout_height="67dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
             android:text="History"
-            android:layout_marginStart="100dp"
-            android:textColor="@color/white"
+            android:textColor="@color/Blue"
             android:textStyle="bold"
-            android:clickable="true"
-            android:backgroundTint="@color/Blue"/>
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:backgroundTint="@color/white" />
 
     </LinearLayout>
 
+    <!-- Equal-width Unit Labels -->
     <TextView
         android:id="@+id/heightUnitLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="6dp"
         android:text="Height Unit"
         android:textColor="@color/black"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/weightUnitLabel" />
 
     <TextView
         android:id="@+id/weightUnitLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
         android:text="Weight Unit"
         android:textColor="@color/black"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
-        app:layout_constraintStart_toEndOf="@id/heightUnitLabel" />
+        app:layout_constraintStart_toEndOf="@id/heightUnitLabel"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Equal-width Unit Pickers -->
     <androidx.cardview.widget.CardView
         android:id="@+id/heightUnitCard"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="6dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="1dp"
@@ -99,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingStart="8dp"
-            android:paddingEnd="5dp"/>
+            android:paddingEnd="8dp"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -107,7 +118,7 @@
         android:id="@+id/weightUnitCard"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="6dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         app:cardBackgroundColor="@color/white"
@@ -122,10 +133,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingStart="8dp"
-            android:paddingEnd="5dp" />
+            android:paddingEnd="8dp" />
 
     </androidx.cardview.widget.CardView>
 
+    <!-- Height Input -->
     <TextView
         android:id="@+id/heightLabel"
         android:layout_width="wrap_content"
@@ -153,12 +165,13 @@
         android:paddingEnd="14dp"
         android:singleLine="true"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/light_grey"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/heightLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Weight Input -->
     <TextView
         android:id="@+id/weightLabel"
         android:layout_width="wrap_content"
@@ -186,20 +199,21 @@
         android:paddingEnd="14dp"
         android:singleLine="true"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/light_grey"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/weightLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Calculate Button -->
     <Button
         android:id="@+id/btnCalculate"
         android:layout_width="0dp"
         android:layout_height="52dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
-        android:drawableTint="@color/Blue"
+        android:backgroundTint="@color/Blue"
         android:text="Calculate"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -207,17 +221,17 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/weight"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/Blue"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Result Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/resultCard"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
-        app:cardBackgroundColor="@color/light_blue"
+        app:cardBackgroundColor="@color/light_green"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
         app:layout_constraintTop_toBottomOf="@id/btnCalculate"
@@ -226,16 +240,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:padding="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="BMI"
-                android:textColor="@color/Blue"
-                android:textSize="18sp" />
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/BMIvalue"
@@ -243,45 +257,47 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="--"
-                android:textColor="@color/Blue"
-                android:textSize="24sp"
+                android:textColor="@color/Green"
+                android:textSize="26sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Descriptionhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
+                android:layout_marginTop="12dp"
                 android:text="Description"
-                android:textStyle="bold"
-                android:textColor="@color/Blue"
-                android:textSize="11sp" />
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="--"
-                android:textColor="@color/Blue"
-                android:textSize="13sp"/>
-
+                android:layout_marginTop="2dp"
+                android:text="Calculate your BMI to view health status"
+                android:textColor="#34495E"
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="12dp"
                 android:text="Category"
-                android:textColor="@color/Blue"
-                android:textSize="11sp"
-                android:textStyle="bold"/>
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/Categorytype"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="--"
-                android:textColor="@color/Blue"
-                android:textSize="13sp"/>
+                android:textColor="@color/Green"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
